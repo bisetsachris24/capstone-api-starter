@@ -15,6 +15,7 @@ import java.security.Principal;
 @RestController
 @RequestMapping("cart")
 @CrossOrigin
+// Requires the user to be logged in before accessing any cart endpoints
 @PreAuthorize("isAuthenticated()")
 public class ShoppingCartController
 {
@@ -27,6 +28,9 @@ public class ShoppingCartController
         this.userService = userService;
     }
 
+    /**
+     * Retrieves the current user's shopping cart.
+     */
     @GetMapping("")
     public ShoppingCart getCart(Principal principal)
     {
@@ -34,6 +38,10 @@ public class ShoppingCartController
         return shoppingCartService.getByUserId(user.getId());
     }
 
+    /**
+     * Adds a product to the current user's shopping cart.
+     * Returns the updated cart after the item is added.
+     */
     @PostMapping("products/{productId}")
     public ResponseEntity<ShoppingCart> addProduct(@PathVariable int productId, Principal principal)
     {
@@ -43,15 +51,25 @@ public class ShoppingCartController
         return ResponseEntity.status(HttpStatus.CREATED).body(cart);
     }
 
+    /**
+     * Updates the quantity of a product already in the cart.
+     */
     @PutMapping("products/{productId}")
     public ShoppingCart updateProduct(@PathVariable int productId,
                                       @RequestBody ShoppingCartItem item,
                                       Principal principal)
     {
         User user = userService.getByUserName(principal.getName());
-        return shoppingCartService.updateProductQuantity(user.getId(), productId, item.getQuantity());
+        return shoppingCartService.updateProductQuantity(
+                user.getId(),
+                productId,
+                item.getQuantity()
+        );
     }
 
+    /**
+     * Removes all items from the current user's shopping cart.
+     */
     @DeleteMapping("")
     public ShoppingCart clearCart(Principal principal)
     {

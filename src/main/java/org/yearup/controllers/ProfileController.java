@@ -17,9 +17,9 @@ public class ProfileController {
     private final ProfileService profileService;
     private final UserService userService;
 
-    public ProfileController (ProfileService profileService, UserService userService) {
+    public ProfileController(ProfileService profileService, UserService userService) {
         this.profileService = profileService;
-        this.userService    = userService;
+        this.userService = userService;
     }
 
     // GET http://localhost:8080/profile

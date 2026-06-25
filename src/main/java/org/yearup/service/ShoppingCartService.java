@@ -11,28 +11,23 @@ import org.yearup.repository.ShoppingCartRepository;
 import java.util.List;
 
 @Service
-public class ShoppingCartService
-{
+public class ShoppingCartService {
     private final ShoppingCartRepository shoppingCartRepository;
     private final ProductService productService;
 
-    public ShoppingCartService(ShoppingCartRepository shoppingCartRepository, ProductService productService)
-    {
+    public ShoppingCartService(ShoppingCartRepository shoppingCartRepository, ProductService productService) {
         this.shoppingCartRepository = shoppingCartRepository;
         this.productService = productService;
     }
 
-    public ShoppingCart getByUserId(int userId)
-    {
+    public ShoppingCart getByUserId(int userId) {
         ShoppingCart cart = new ShoppingCart();
         List<CartItem> cartItems = shoppingCartRepository.findByUserId(userId);
 
-        for (CartItem cartItem : cartItems)
-        {
+        for (CartItem cartItem : cartItems) {
             Product product = productService.getById(cartItem.getProductId());
 
-            if (product != null)
-            {
+            if (product != null) {
                 ShoppingCartItem item = new ShoppingCartItem();
                 item.setProduct(product);
                 item.setQuantity(cartItem.getQuantity());
@@ -44,19 +39,15 @@ public class ShoppingCartService
         return cart;
     }
 
-    public ShoppingCart addProduct(int userId, int productId)
-    {
+    public ShoppingCart addProduct(int userId, int productId) {
         CartItem cartItem = shoppingCartRepository.findByUserIdAndProductId(userId, productId);
 
-        if (cartItem == null)
-        {
+        if (cartItem == null) {
             cartItem = new CartItem();
             cartItem.setUserId(userId);
             cartItem.setProductId(productId);
             cartItem.setQuantity(1);
-        }
-        else
-        {
+        } else {
             cartItem.setQuantity(cartItem.getQuantity() + 1);
         }
 
@@ -64,12 +55,10 @@ public class ShoppingCartService
         return getByUserId(userId);
     }
 
-    public ShoppingCart updateProductQuantity(int userId, int productId, int quantity)
-    {
+    public ShoppingCart updateProductQuantity(int userId, int productId, int quantity) {
         CartItem cartItem = shoppingCartRepository.findByUserIdAndProductId(userId, productId);
 
-        if (cartItem != null)
-        {
+        if (cartItem != null) {
             cartItem.setQuantity(quantity);
             shoppingCartRepository.save(cartItem);
         }
@@ -78,8 +67,7 @@ public class ShoppingCartService
     }
 
     @Transactional
-    public ShoppingCart clearCart(int userId)
-    {
+    public ShoppingCart clearCart(int userId) {
         shoppingCartRepository.deleteByUserId(userId);
         return getByUserId(userId);
     }
