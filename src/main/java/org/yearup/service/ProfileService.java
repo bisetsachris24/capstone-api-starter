@@ -4,7 +4,7 @@ import org.springframework.stereotype.Service;
 import org.yearup.models.Profile;
 import org.yearup.repository.ProfileRepository;
 
-import java.util.Optional;
+
 
 @Service
 public class ProfileService
@@ -21,7 +21,7 @@ public class ProfileService
         return profileRepository.save(profile);
     }
 
-    public Optional<Profile> getByUserId(int id) { return profileRepository.findById(id);
+    public Profile getByUserId(int id) { return profileRepository.findById(id).orElseThrow();
     }
 
     public Profile update(int userId, Profile updated) {
