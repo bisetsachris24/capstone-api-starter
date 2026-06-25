@@ -31,7 +31,7 @@ public class ProfileController {
 
     // PUT http://localhost:8080/profile
     @PutMapping("")
-    public ResponseEntity<Profile> updateProfile(@RequestBody Profile profile, Principal principal) {
+    public ResponseEntity<?> updateProfile(@RequestBody Profile profile, Principal principal) {
         User user = userService.getByUserName(principal.getName());
         Profile updated = profileService.update(user.getId(), profile);
         return ResponseEntity.ok(updated);
