@@ -9,7 +9,11 @@ import org.yearup.models.Product;
 import org.yearup.service.ProductService;
 
 import java.util.List;
-
+/**
+ * REST Controller for managing products.
+ * Provides endpoints for searching, retrieving,
+ * creating, updating, and deleting products.
+ */
 @RestController
 @RequestMapping("products")
 @CrossOrigin
@@ -31,7 +35,13 @@ public class ProductsController
     {
         return productService.search(categoryId, minPrice, maxPrice, subCategory);
     }
-
+    /**
+     * Retrieve a product by its ID.
+     *
+     * @param id product ID
+     * @return matching product
+     * @throws ResponseStatusException if product is not found
+     */
     @GetMapping("{id}")
     @PreAuthorize("permitAll()")
     public Product getById(@PathVariable int id)
