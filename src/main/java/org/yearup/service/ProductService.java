@@ -50,6 +50,7 @@ public class ProductService {
         existing.setImageUrl(product.getImageUrl());
         //Bug1
         existing.setStock(product.getStock());
+
         return productRepository.save(existing);
     }
 
