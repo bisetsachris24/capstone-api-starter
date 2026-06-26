@@ -12,10 +12,9 @@ This project was completed as part of a software development capstone focused on
 
 * User Registration
 * User Login
-* JWT Authentication
 * Role-Based Authorization (ADMIN and USER)
 
-### Product Management
+### Product 
 
 * View all products
 * View product by ID
@@ -24,7 +23,7 @@ This project was completed as part of a software development capstone focused on
 * Update products (Admin only)
 * Delete products (Admin only)
 
-### Category Management
+### Category 
 
 * View all categories
 * View category by ID
