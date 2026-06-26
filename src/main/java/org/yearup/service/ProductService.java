@@ -48,6 +48,8 @@ public class ProductService {
         existing.setSubCategory(product.getSubCategory());
         existing.setFeatured(product.isFeatured());
         existing.setImageUrl(product.getImageUrl());
+        //Bug1
+        existing.setStock(product.getStock());
         return productRepository.save(existing);
     }
 
