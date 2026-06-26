@@ -19,6 +19,7 @@ public class ProductService {
                 ? productRepository.findByCategoryId(categoryId)
                 : productRepository.findAll();
 
+        //bug1 .filter(Product::isFeatured)  // ← this was hiding non-featured products
         return products.stream()
                 .filter(p -> minPrice == null || p.getPrice() >= minPrice)
                 .filter(p -> maxPrice == null || p.getPrice() <= maxPrice)
@@ -48,7 +49,7 @@ public class ProductService {
         existing.setSubCategory(product.getSubCategory());
         existing.setFeatured(product.isFeatured());
         existing.setImageUrl(product.getImageUrl());
-        //Bug1
+        //Bug2
         existing.setStock(product.getStock());
 
         return productRepository.save(existing);
